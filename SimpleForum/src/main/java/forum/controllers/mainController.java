@@ -23,15 +23,14 @@ public class mainController {
     private userRepo userR;
 
     @PostMapping("/regAction")
-    public @ResponseBody String regUser(@Valid user usrVali, @ModelAttribute user usr, BindingResult bindingResult){
+    public String regUser(@Valid user usrVali, BindingResult bindingResult, @ModelAttribute user usr){
 
 
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.toString());
-            return "/reg";
+        if (bindingResult.hasFieldErrors()) {
+            return "redirect:/reg";
         }
 
         userR.save(usr);
-        return "data saved.";
+        return "redirect:/";
     }
 }
